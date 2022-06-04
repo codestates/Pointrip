@@ -6,10 +6,13 @@ import Saved from "./saved"
 @Entity()
 export default class User extends BaseTimeEntity {
 
+  /* @PrimaryGeneratedColumn()
+  id!: number; */
+
   @OneToMany(() => Post, (post) => post.user, {
     cascade!: true
   })
-  posts!: Post[]
+  posts!: Post[];
 
   @OneToMany(() => Saved, (saved) => saved.user, {
       cascade!: true
@@ -17,15 +20,15 @@ export default class User extends BaseTimeEntity {
   saved!: Saved[]
 
   @Column({
-      unique!: true,
-      default!: 0
+      unique!: true
   })
   username!: string
 
-  @Column({
-    default!: 0
-  })
+  @Column()
   password!: string
+
+  @Column()
+  passwordHash!: string
 
   @Column({
       nullable!: true
@@ -33,8 +36,7 @@ export default class User extends BaseTimeEntity {
   bio!: string
 
   @Column({
-      unique!: true,
-      default!: 0
+      unique!: true
   })
   email!: string
 
