@@ -16,7 +16,8 @@ export default (req: Request, res: Response) => {
   console.log(clientSecret)
   console.log(code);
 
-  // 이제 authorization code를 이용해 access token을 발급받기 위한 post 요청을 보냅니다. 다음 링크를 참고하세요.
+  // TODO : 이제 authorization code를 이용해 access token을 발급받기 위한 post 요청을 보냅니다. 다음 링크를 참고하세요.
+  // https://docs.github.com/en/free-pro-team@latest/developers/apps/identifying-and-authorizing-users-for-github-apps#2-users-are-redirected-back-to-your-site-by-github
   axios
   .post(`https://kauth.kakao.com/oauth/token?client_id=${clientID}&client_secret=${clientSecret}&code=${code}&redirect_uri=${redirectURI}&grant_type=authorization_code`)
   .then(response => {
