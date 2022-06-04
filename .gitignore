@@ -12,7 +12,6 @@ node_modules/
 build/
 tmp/
 temp/
-infra/
 
 # dependencies
 node_modules

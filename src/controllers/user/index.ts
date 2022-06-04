@@ -11,7 +11,7 @@ export default {
   },
   // get ${email}: check duplicate email ---------------------------------------
   checkEmail: (req: Request, res: Response) => {
-    console.log('checking duplicate email...');
+    console.log('Checking duplicate email...');
     getRepo(User).find({
     where: {
         email: req.params.email
