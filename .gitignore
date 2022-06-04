@@ -1,10 +1,18 @@
+node_modules
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+package-lock.json
+src/data-source.ts
 .idea/
 .vscode/
 node_modules/
 build/
 tmp/
 temp/
-
+infra/
 
 # dependencies
 node_modules
