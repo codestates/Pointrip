@@ -1,11 +1,17 @@
-import express from "express";
+import express, { NextFunction, Request, Response } from "express";
 import addPlan from "../controllers/plan/addpost";
 import getPlan from "../controllers/plan/getplan"
 
 
 const router = express.Router();
 
-
+router.use((req: Request, res: Response, next: NextFunction) => {
+  console.log('Time: ', new Date().toLocaleString());
+  next();
+});
+/* router.get('/', (req: Request, res: Response) => {
+  res.send('Birds home page')
+}) */
 router.get('/', getPlan);
 router.post('/', addPlan)
 router.patch('/')
