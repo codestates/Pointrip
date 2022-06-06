@@ -22,10 +22,7 @@ export default async (req: Request, res: Response) => {
   return getRepo(Post)
   .find({ where: { userId: accessTokenData.id }})
   .then((data: any[]) => {
-    if (data.length > 0) {
-    /* console.log(data); */
     res.send({ message: data.length + 1 });
-    } else res.send('No such post found.');
   })
   .catch((err: any) => res.send({ error: err, message: 'fail' }));
 }

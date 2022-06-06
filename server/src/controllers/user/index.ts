@@ -38,7 +38,6 @@ export default {
       /* console.log(result); */
       if (result.length > 0) {
         res.send(ReasonPhrases.CONFLICT);
-        /* throw new Error(ReasonPhrases.CONFLICT); */
         console.log(ReasonPhrases.CONFLICT);
       } else {
         res.send('No duplicate username found.');

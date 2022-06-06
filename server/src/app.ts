@@ -1,7 +1,6 @@
 import "reflect-metadata"
 import express, { Request, Response, NextFunction } from "express";
 import cors from 'cors';
-import cookieparser from 'cookie-parser';
 import bodyParser from "body-parser";
 import 'dotenv/config';
 import AppDataSource from "./data-source";
@@ -11,6 +10,7 @@ import BookRouter from "./routes/bookmark";
 import indexRouter from './routes'
 import oauthRouter from './routes/oauth';
 import Post from "./entity/post";
+import cookieParser from "cookie-parser";
 
 let server;
 let PORT = process.env.SERVER_PORT || 4000;
@@ -22,26 +22,29 @@ AppDataSource
     .then(() => {
         console.log("Data Source has been initialized!");
         const app = express();
-        app.use(express.json())
+        app.use(
+          cors({
+            origin: ['http://localhost:3000'],
+            credentials: true,
+            methods: ['GET', 'POST', 'OPTIONS', 'PATCH', 'PUT', 'DELETE']
+          })
+        );
+        app.use(express.json());
+        app.use(express.urlencoded({ extended: false }));
+        app.use(cookieParser());
         app.use("/users",UserRouter);
         app.use("/Oauth", oauthRouter);
         app.use("/plan",PlanRouter);
         app.use("/bookmark",BookRouter);
         server = app.listen(PORT, () => {
-          console.log(`http server runnning on port ${PORT}`)
+          console.log(`http server runnning on port ${PORT}.`)
         });
     })
     .catch((err: any) => {
         console.error("Error during Data Source initialization:", err)
     })
 
-
 //routers
-const corsOption = {
-  origin: ['*'],
-  credentials: true,
-  methods: ['GET', 'POST', 'OPTIONS','PATCH','DELETE']
-  };
 
 //routes
 //-------------------- test--------------------------
@@ -49,12 +52,6 @@ const corsOption = {
   res.status(200).send("Hello, world!");
 }); */
 //-------------------- test--------------------------
-
-
-
-
-
-
 
 /* app.use('*', (req, res) => {
   return res.status(404).json({
