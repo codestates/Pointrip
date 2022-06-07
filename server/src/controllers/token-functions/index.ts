@@ -1,9 +1,10 @@
 import 'dotenv/config';
+import { Request, Response } from 'express';
 import { sign, verify } from 'jsonwebtoken';
 
 export default {
-  generateAccessToken: (data: any) => {
-    return sign(data, process.env.ACCESS_SECRET!, { expiresIn: "15s" });
+  generateAccessToken: (data: Request) => {
+    return sign(data, process.env.ACCESS_SECRET!, { expiresIn: "30d" });
   },
   /* generateRefreshToken: (data) => {
     return sign(data, process.env.REFRESH_SECRET!, { expiresIn: "30d" });
@@ -13,25 +14,27 @@ export default {
       httpOnly: true,
     });
   }, */
-  sendAccessToken: (res: any, accessToken: any) => {
+  sendAccessToken: (res: Response, accessToken: string) => {
     res
     .cookie("jwt", accessToken, {
       httpOnly: true,
     }).json({ data: { accessToken }, message: "ok" });
   },
-  resendAccessToken: (res: any, accessToken: any, data: any) => {
+  /* resendAccessToken: (res: Response, accessToken: string, data: any) => {
     res.json({ data: { accessToken, userInfo: data }, message: "ok" });
-  },
-  isAuthorized: (req: any) => {
-    const authorization = req.headers["authorization"];
-    if (!authorization) {
+  }, */
+  isAuthorized: (req: Request) => {
+    const cookie: any = req.headers["cookie"];
+    if (!cookie) {
+      console.log('No cookie found.');
       return null;
     }
-    const token = authorization.split(" ")[1];
+    const token = cookie.split("=")[1];
     try {
       return verify(token, process.env.ACCESS_SECRET!);
     } catch (err) {
       // return null if invalid token
+      console.log('Invalid token.');
       return null;
     }
   },
