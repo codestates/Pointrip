@@ -10,6 +10,7 @@ class Post extends BaseTimeEntity {
 
     @ManyToOne(() => User, (user) => user.posts, {
         onDelete: "CASCADE",
+        nullable :false
     })
     @JoinColumn()
     user!: User
@@ -27,8 +28,7 @@ class Post extends BaseTimeEntity {
     @ManyToMany(() => Hashtag, (hashtag: any) => hashtag.posts)
     hashtags!: Hashtag[]
 
-    @Column()
-    userOrder!: number
+  
 
     @Column()
     title!: string

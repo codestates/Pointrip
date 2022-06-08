@@ -1,10 +1,13 @@
 import express from "express";
+import addBook from "../controllers/bookmark/book";
 import bookcontroller from "../controllers/bookmark/book"
+import delBook from "../controllers/bookmark/delbook";
+import getBook from "../controllers/bookmark/getbook";
 
 
 
 const router = express.Router();
-router.get('/${nickname}',);
-router.post('/',);
-router.delete('/')
+router.get('/:userId',getBook);
+router.post('/',addBook);
+router.delete('/',delBook)
 export default router;

@@ -9,10 +9,14 @@ class Point {
     id!:number
 
     @ManyToOne(() => Post, (post) => post.points, {
+        
         onDelete!:"CASCADE",
+        nullable :false
+       
     })
     @JoinColumn()
     post!:Post
+   
 
     @OneToMany(() => Photo, (photo) => photo.point, {
         cascade!:true,
@@ -24,6 +28,9 @@ class Point {
 
     @Column()
     address!:string
+
+    @Column()
+    pointnum!:number
 
 }
 

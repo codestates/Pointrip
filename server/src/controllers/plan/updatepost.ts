@@ -8,10 +8,12 @@ import { getRepo } from "../../app";
 
 
 
-const addPlan = async (req: Request, res: Response) => {
-    console.log("addPlan도입")
+const updPlan = async (req: Request, res: Response) => {
+    console.log("updPlan도입")
     try {
-        const { user_id, title, day, hashtag,point } = req.body;
+        const { user_id, title, day, hashtag,
+
+            point } = req.body;
         console.log(user_id, point.length)
         if (!user_id || !point) {
             return res.status(400).send({ 'message': 'input error' })
@@ -50,13 +52,6 @@ const addPlan = async (req: Request, res: Response) => {
                                 })
                     }
 
-                  
-                       
-
-                    
-
-
-
 
                     return res.status(201).send({ "message": "sucess" })
                 })
@@ -73,4 +68,4 @@ const addPlan = async (req: Request, res: Response) => {
 }
 
 
-export default addPlan;
+export default updPlan;

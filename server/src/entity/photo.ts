@@ -9,15 +9,27 @@ class Photo {
 
     @ManyToOne(() => Point, (point) => point.photos, {
         onDelete!: "CASCADE",
+        nullable :false
     })
     @JoinColumn()
     point!: Point
 
     @Column()
-    image!: string
+    image1!: string
 
-    @Column()
-    isSample!: boolean
+    @Column({ nullable: true})
+    image2!: string
+
+    @Column({ nullable: true})
+    image3!: string
+
+    @Column({ nullable: true})
+    image4!: string
+
+    @Column({ nullable: true})
+    image5!: string
+
+  
 
 }
 
