@@ -3,7 +3,7 @@ import express, { Request, Response, NextFunction } from "express";
 import cors from 'cors';
 import bodyParser from "body-parser";
 import 'dotenv/config';
-import AppDataSource from "./data-source";
+import {AppDataSource} from "./data-source";
 import UserRouter from "./routes/user";
 import PlanRouter from "./routes/plan";
 import BookRouter from "./routes/bookmark";
