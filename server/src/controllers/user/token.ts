@@ -10,10 +10,11 @@ export default async (req: Request, res: Response) => {
     // 로그인 여부를 판단하고, Access token payload를 이용하여 응답을 제공.
     if (!accessTokenData) {
       res.status(StatusCodes.UNAUTHORIZED)
-      .send({ data: null, message: ReasonPhrases.UNAUTHORIZED });
+      .send('권한이 없습니다.');
     }
     const user = await getRepo(User)
     .find({ where: { email: accessTokenData?.email }});
     if (user.length) res.send(ReasonPhrases.OK);
-    res.send(ReasonPhrases.NOT_FOUND);
+    res.status(404)
+    .send('존재하지 않는 사용자입니다.');
 };
