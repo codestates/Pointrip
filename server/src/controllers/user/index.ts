@@ -11,36 +11,34 @@ export default {
   },
   // get ${email}: check duplicate email ---------------------------------------
   checkEmail: (req: Request, res: Response) => {
-    console.log('Checking duplicate email...');
-    getRepo(User).find({
-    where: {
-        email: req.params.email
-      }
-    }).then(result => {
+    console.log('이메일 중복 여부 확인 중...');
+    getRepo(User)
+    .find({ where: { email: req.params.email } })
+    .then(result => {
       /* console.log(result); */
       if (result.length > 0) {
-        res.send(ReasonPhrases.CONFLICT);
+        res.status(StatusCodes.CONFLICT)
+        .send('이미 등록된 이메일입니다.');
         /* throw new Error(ReasonPhrases.CONFLICT); */
-        console.log(ReasonPhrases.CONFLICT);
+        return console.log('이미 등록된 이메일입니다.');
       } else {
-        res.send('No duplicate email found.');
+        res.send('사용할 수 있는 이메일입니다.');
       }
     });
   },
   // get ${username}: check duplicate username ---------------------------------
   checkUsername: (req: Request, res: Response) => {
-    console.log('Checking duplicate username...');
-    getRepo(User).find({
-    where: {
-        username: req.params.username
-      }
-    }).then(result => {
+    console.log('이름 중복 여부 확인 중...');
+    getRepo(User)
+    .find({ where: { username: req.params.username } })
+    .then(result => {
       /* console.log(result); */
       if (result.length > 0) {
-        res.send(ReasonPhrases.CONFLICT);
-        console.log(ReasonPhrases.CONFLICT);
+        res.status(StatusCodes.CONFLICT)
+        .send('이미 등록된 이름입니다.');
+        return console.log('이미 등록된 이름입니다.');
       } else {
-        res.send('No duplicate username found.');
+        res.send('사용할 수 있는 이름입니다.');
       }
     });
   },
@@ -48,31 +46,73 @@ export default {
   async signup (req: Request, res: Response) {
     // TODO: 회원가입 및 사용자 생성 로직을 작성하세요.
     let { username, email, password } = req.body;
-    /* console.log({ username, email, password }); */
+    console.log({ username, email, password });
     if (
       !username ||
       !email ||
       !password
     ) {
-      res.status(StatusCodes.UNPROCESSABLE_ENTITY)
-      .send(ReasonPhrases.UNPROCESSABLE_ENTITY);
+      res.status(422)
+      .send('이름, 이메일, 비밀번호를 모두 입력하여 주십시오.');
+      return console.log('이름, 이메일, 비밀번호를 모두 입력하여 주십시오.');
     } else {
-      const user = await getRepo(User).create(req.body);
-      /* await console.log(user); */
-      (user as any).passwordHash = bcrypt.hashSync(req.body.password, 10);
-      try {
-        const results = await getRepo(User).save(user);
-        console.log(results);
-        let obj: object = Object.assign({}, results);
-        let accessToken = token.generateAccessToken(obj as any);
-        /* console.log(accessToken); */
-        res
-        .status(StatusCodes.CREATED)
-        .cookie('jwt', accessToken, { httpOnly: true })
-        /* .json({ message: ReasonPhrases.CREATED }); */
-        .send(ReasonPhrases.CREATED);
-      } catch {
-        return res.send('Duplicate entry.');
+      console.log('이메일 중복 여부 확인 중...');
+      let user = await getRepo(User).find({ where: { email } });
+      console.log(`검색 결과: ${user}`);
+      if (user.length > 0) {
+        res.status(409)
+        .send('이미 등록된 이메일입니다.');
+        /* throw new Error(ReasonPhrases.CONFLICT); */
+        return console.log('이미 등록된 이메일입니다.');
+      } else {
+        console.log('사용할 수 있는 이메일입니다.');
+        console.log('이름 중복 여부 확인 중...');
+        user = await getRepo(User).find({ where: { username } });
+        console.log(`검색 결과: ${user}`);
+        if (user.length > 0) {
+          res.status(409)
+          .send('이미 등록된 이름입니다.');
+          return console.log('이미 등록된 이름입니다.');
+        } else {
+          console.log('사용할 수 있는 이름입니다.');
+          let user = await getRepo(User).create(req.body);
+          if (!user) {
+            res.status(500)
+            .send('계정 생성에 실패하였습니다.');
+            return console.log('계정 생성에 실패하였습니다.');
+          } else {
+            console.log(`계정 생성 완료: ${user}`);
+            (user as any).passwordHash = bcrypt.hashSync(password, 10);
+            const results = await getRepo(User).save(user);
+            if (!results) {
+              res.status(500)
+              .send('계정 저장에 실패하였습니다.');
+              return console.log('계정 저장에 실패하였습니다..');
+            } else {
+              console.log(`계정 저장 완료: ${results}`);
+              let obj: object = Object.assign({}, results);
+              if (!obj) {
+                res.status(500)
+                .send('클래스를 객체로 전환하는 데 실패하였습니다.');
+                return console.log('클래스를 객체로 전환하는 데 실패하였습니다.');
+              } else {
+                console.log(`클래스의, 객체로의 전환 완료: ${obj}`);
+                let accessToken = token.generateAccessToken(obj as any);
+                if (!accessToken) {
+                  res.status(500)
+                  .send('액세스 토큰 생성에 실패하였습니다.');
+                  return console.log('액세스 토큰 생성에 실패하였습니다.');
+                } else {
+                  console.log(`액세스 토큰 생성 완료: ${accessToken}`);
+                  res.status(201)
+                  .cookie('jwt', accessToken, { httpOnly: true })
+                  /* .json({ message: ReasonPhrases.CREATED }); */
+                  .send('회원 가입이 완료되었습니다.');
+                }
+              }
+            }
+          }
+        }
       }
     }
   },
@@ -82,7 +122,7 @@ export default {
     // 로그인 여부를 판단하고, Access token payload를 이용하여 응답을 제공.
     if (!accessTokenData) {
       res.status(StatusCodes.UNAUTHORIZED)
-      .send({ data: null, message: ReasonPhrases.UNAUTHORIZED });
+      .send('권한이 없습니다.');
     }
     return getRepo(User)
     .find({ where: { email: accessTokenData?.email }})
@@ -98,7 +138,7 @@ export default {
     // 로그인 여부를 판단하고, Access token payload를 이용하여 응답을 제공.
     if (!accessTokenData) {
       res.status(StatusCodes.UNAUTHORIZED)
-      .send({ data: null, message: ReasonPhrases.UNAUTHORIZED });
+      .send('권한이 없습니다.');
     }
     const userToUpdate: any = await getRepo(User)
     .find({ where: { email: accessTokenData?.email }});
@@ -110,17 +150,18 @@ export default {
   },
   // delete ${email}: dropout --------------------------------------------------
   async dropout (req: Request, res: Response) {
-    console.log('Commencing dropout...');
+    console.log('회원 탈퇴 중...');
     /* console.log(req); */
     let userToRemove = await getRepo(User).find({ where: { email: req.params.email } });
     /* console.log(userToRemove); */
     if (userToRemove.length > 0) {
       await getRepo(User).remove(userToRemove as object);
-      console.log('Dropout complete.');
-      res.send('Dropout complete.');
+      console.log('회원 탈퇴가 완료되었습니다.');
+      res.send('회원 탈퇴가 완료되었습니다.');
     } else {
-      console.log('No such user found.');
-      res.send('No such user found.');
+      console.log('존재하지 않는 사용자입니다.');
+      res.status(400)
+      .send('존재하지 않는 사용자입니다.');
     }
   },
   /* async all(request: Request, response: Response, next: NextFunction) {

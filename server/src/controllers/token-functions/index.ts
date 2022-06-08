@@ -26,7 +26,7 @@ export default {
   isAuthorized: (req: Request) => {
     const cookie: any = req.headers["cookie"];
     if (!cookie) {
-      console.log('No cookie found.');
+      console.log('쿠키가 발견되지 않았습니다.');
       return null;
     }
     const token = cookie.split("=")[1];
@@ -34,7 +34,7 @@ export default {
       return verify(token, process.env.ACCESS_SECRET!);
     } catch (err) {
       // return null if invalid token
-      console.log('Invalid token.');
+      console.log('유효하지 않은 토큰입니다.');
       return null;
     }
   },

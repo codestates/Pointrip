@@ -22,6 +22,9 @@ AppDataSource
     .then(() => {
         console.log("Data Source has been initialized!");
         const app = express();
+        app.use(express.json());
+        app.use(express.urlencoded({ extended: false }));
+        app.use(cookieParser());
         app.use(
           cors({
             origin: ['http://localhost:3000'],
@@ -29,9 +32,6 @@ AppDataSource
             methods: ['GET', 'POST', 'OPTIONS', 'PATCH', 'PUT', 'DELETE']
           })
         );
-        app.use(express.json());
-        app.use(express.urlencoded({ extended: false }));
-        app.use(cookieParser());
         app.use("/users",UserRouter);
         app.use("/Oauth", oauthRouter);
         app.use("/plan",PlanRouter);
