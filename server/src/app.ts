@@ -13,7 +13,7 @@ import Post from "./entity/post";
 import cookieParser from "cookie-parser";
 
 let server;
-let PORT = process.env.SERVER_PORT || 4000;
+let PORT :number = parseInt(process.env.SERVER_PORT as string, 10)
 function getRepo (entity: any) {
   return AppDataSource.getRepository(entity);
 }
