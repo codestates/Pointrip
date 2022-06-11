@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "typeorm"
-import Point from "./point"
+import Post from "./post"
 
 @Entity()
 class Photo {
@@ -7,12 +7,12 @@ class Photo {
     @PrimaryGeneratedColumn()
     id!: number
 
-    @ManyToOne(() => Point, (point) => point.photos, {
+    @ManyToOne(() => Post, (post) => post.photos, {
         onDelete!: "CASCADE",
         nullable :false
     })
     @JoinColumn()
-    point!: Point
+    point!: Post
 
     @Column()
     image1!: string

@@ -1,66 +1,46 @@
 import { Request, Response } from 'express';
-import Plan from '../../entity/post'
-import hash from '../../entity/hashtag'
-import Point from '../../entity/point'
+import Post from '../../entity/post'
 import Photo from '../../entity/photo'
 import user from '../../entity/user'
 import { getRepo } from "../../app";
+import token from '../token-functions';
 
 
 
 const addPlan = async (req: Request, res: Response) => {
     console.log("addPlan도입")
+
     try {
-        const { user_id, title, day, hashtag,point } = req.body;
-        console.log(user_id, point.length)
-        if (!user_id || !point) {
-            return res.status(400).send({ 'message': 'input error' })
+        const { title, date, diary, address, latitude, longtitude, image,user_Id } = req.body
+        // const accessTokenData: any = await token.isAuthorized(req);
+        console.log(image)
+        if (!title || !date || !address || !latitude || !longtitude || !image) {
+            return res.status(401).send({ "message": "인풋값오류" })
+        // } else if (!accessTokenData) {
+        //     console.log('토큰값이 없습니다.');
+        //     return res.status(401)
+        //         .send('토큰값이 없습니다.');
         }
-        const adpost = await getRepo(Plan).createQueryBuilder().insert().values({ user: user_id, title: title, day: day }).execute().then(async (data: any) => {
+        await getRepo(Post).createQueryBuilder().insert().values(
+            {
+                user: user_Id, address: address, day: date, diary: diary, title: title, latitude: latitude, longtitude: longtitude // 아이디 토큰 값으로 변경
+            }
+        ).execute().then(async (data: any) => {
+            const postid = data.identifiers[0].id
+            console.log(postid)
 
-            const findpost_id = await getRepo(Plan).findOne(
+            getRepo(Photo).createQueryBuilder().insert().values(
                 {
-                    select: ["id"],
-                    where: [{ title: title, user: user_id }]
-                }).then(async (fpost_id: any) => {
-                    console.log(fpost_id);
-                    for (let i = 0; i < point.length; i++) {
-                        const adpoint = await getRepo(Point).createQueryBuilder().insert().values(
-
-                            { diary: point[i].diary, address: point[i].address, post: fpost_id, pointnum: point[i].point_num }).execute()
-                            const findpoint_id = await getRepo(Point).findOne(
-                                {
-                                    select: ["id"],
-                                    where: [{ pointnum: point[i].point_num, post: findpost_id }]
-                                }).then(async (fpoint_id: any) => {
-                                    console.log("fppId", fpoint_id)
-                                    console.log(point[i].image1)
-                                    const adphoto = await getRepo(Photo).createQueryBuilder().insert().values(
-                                        {
-                                            image1: point[i].image1, 
-                                            image2: point[i].image2, 
-                                            image3: point[i].image3, 
-                                            image4: point[i].image4, 
-                                            image5: point[i].image5, 
-                                            point: fpoint_id
-                                        }
-                                    ).execute();
-    
-    
-                                })
-                    }
-
-                  
-                       
-
-                    
-
-
-
-
-                    return res.status(201).send({ "message": "sucess" })
+                    point : data.identifiers[0].id , image1 :image.image1,image2 :image.image2,image3 :image.image3,image4 :image.image4,image5 :image.image5
+                }
+            ).execute().then(async (data: any) => {
+                res.status(201).send({
+                    message : "일정이 생성되었습니다.",
+                    postid : postid
                 })
+            })
         })
+
 
 
     } catch (err) {

@@ -1,16 +1,15 @@
 import { Entity, Column, ManyToOne, OneToMany, ManyToMany, JoinColumn } from "typeorm"
 import { BaseTimeEntity } from "./base-time"
-import Hashtag from "./hashtag"
-import Point from "./point"
 import Saved from "./saved"
 import User from "./user"
+import Photo from "./photo"
 
 @Entity()
 class Post extends BaseTimeEntity {
 
     @ManyToOne(() => User, (user) => user.posts, {
         onDelete: "CASCADE",
-        nullable :false
+        nullable: false
     })
     @JoinColumn()
     user!: User
@@ -20,15 +19,11 @@ class Post extends BaseTimeEntity {
     })
     saved!: Saved[]
 
-    @OneToMany(() => Point, (point) => point.post, {
-        cascade: true
+    @OneToMany(() => Photo, (photo) => photo.point, {
+        cascade!: true,
     })
-    points!: Point[]
+    photos!: Photo[]
 
-    @ManyToMany(() => Hashtag, (hashtag: any) => hashtag.posts)
-    hashtags!: Hashtag[]
-
-  
 
     @Column()
     title!: string
@@ -36,6 +31,15 @@ class Post extends BaseTimeEntity {
     @Column({ type: 'date', default: () => "(current_date)" })
     day!: Date
 
+    @Column()
+    diary!: string
+
+    @Column()
+    address!: string
+    @Column()
+    latitude!: string
+    @Column()
+    longtitude!: string
 }
 
 export default Post;

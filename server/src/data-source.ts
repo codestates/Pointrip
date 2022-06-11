@@ -9,7 +9,7 @@ export const AppDataSource = new DataSource({
     port: 3306,
     username: "root",
     password: "newfox11",
-    database: "pointrip2",
+    database: "pointrip3",
     synchronize: true,
     logging: true,
     entities: ["src/entity/*.{js,ts}"],
