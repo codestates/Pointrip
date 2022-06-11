@@ -11,9 +11,9 @@ const addPlan = async (req: Request, res: Response) => {
     console.log("addPlan도입")
 
     try {
-        const { title, date, diary, address, latitude, longtitude, image,user_Id } = req.body
+        const { title, date, diary, address, latitude, longtitude, image,user_Id ,object} = req.body
         const accessTokenData: any = await token.isAuthorized(req);
-        console.log(title, date,diary,address,latitude,longtitude,image,accessTokenData.id)
+        console.log(title, date,diary,address,latitude,longtitude,image,accessTokenData.id,object)
         console.log(image)
         if (!title || !date || !address || !latitude || !longtitude || !image) {
             return res.status(401).send({ "message": "인풋값오류" })
