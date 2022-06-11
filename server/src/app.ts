@@ -28,7 +28,7 @@ AppDataSource
         app.use(cookieParser());
         app.use(
           cors({
-            origin: ["*"],
+            origin: ['https://localhost:3000'],
             credentials: true,
             methods: ['GET', 'POST', 'OPTIONS', 'PATCH', 'PUT', 'DELETE']
           })

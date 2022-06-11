@@ -12,7 +12,7 @@ class Photo {
         nullable :false
     })
     @JoinColumn()
-    point!: Post
+    post!: Post
 
     @Column()
     image1!: string

@@ -19,7 +19,7 @@ class Post extends BaseTimeEntity {
     })
     saved!: Saved[]
 
-    @OneToMany(() => Photo, (photo) => photo.point, {
+    @OneToMany(() => Photo, (photo) => photo.post, {
         cascade!: true,
     })
     photos!: Photo[]
