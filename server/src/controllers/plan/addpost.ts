@@ -31,7 +31,7 @@ const addPlan = async (req: Request, res: Response) => {
 
             getRepo(Photo).createQueryBuilder().insert().values(
                 {
-                    point : data.identifiers[0].id , image1 :image.image1,image2 :image.image2,image3 :image.image3,image4 :image.image4,image5 :image.image5
+                    post : data.identifiers[0].id , image1 :image.image1,image2 :image.image2,image3 :image.image3,image4 :image.image4,image5 :image.image5
                 }
             ).execute().then(async (data: any) => {
                 res.status(201).send({
