@@ -24,7 +24,7 @@ export default {
     res.json({ data: { accessToken, userInfo: data }, message: "ok" });
   }, */
   isAuthorized: (req: Request) => {
-    const cookie: any = req.headers["cookie"];
+    const cookie: any = req.cookies.jwt;
     if (!cookie) {
       console.log('쿠키가 발견되지 않았습니다.');
       return null;
