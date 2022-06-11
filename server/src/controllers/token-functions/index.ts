@@ -25,6 +25,7 @@ export default {
   }, */
   isAuthorized: (req: Request) => {
     const cookie: any = req.headers.authorization;
+    console.log(cookie)
     if (!cookie) {
       console.log('쿠키가 발견되지 않았습니다.');
       return null;
