@@ -30,9 +30,9 @@ export default {
       console.log('쿠키가 발견되지 않았습니다.');
       return null;
     }
-    const token = cookie.split("=")[1];
+   
     try {
-      return verify(token, process.env.ACCESS_SECRET!);
+      return verify(cookie, process.env.ACCESS_SECRET!);
     } catch (err) {
       // return null if invalid token
       console.log('유효하지 않은 토큰입니다.');
