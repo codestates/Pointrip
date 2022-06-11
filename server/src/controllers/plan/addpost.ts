@@ -12,18 +12,18 @@ const addPlan = async (req: Request, res: Response) => {
 
     try {
         const { title, date, diary, address, latitude, longtitude, image,user_Id } = req.body
-        // const accessTokenData: any = await token.isAuthorized(req);
+        const accessTokenData: any = await token.isAuthorized(req);
         console.log(image)
         if (!title || !date || !address || !latitude || !longtitude || !image) {
             return res.status(401).send({ "message": "인풋값오류" })
-        // } else if (!accessTokenData) {
-        //     console.log('토큰값이 없습니다.');
-        //     return res.status(401)
-        //         .send('토큰값이 없습니다.');
+        } else if (!accessTokenData) {
+            console.log('토큰값이 없습니다.');
+            return res.status(401)
+                .send('토큰값이 없습니다.');
         }
         await getRepo(Post).createQueryBuilder().insert().values(
             {
-                user: user_Id, address: address, day: date, diary: diary, title: title, latitude: latitude, longtitude: longtitude // 아이디 토큰 값으로 변경
+                user: accessTokenData.id, address: address, day: date, diary: diary, title: title, latitude: latitude, longtitude: longtitude // 아이디 토큰 값으로 변경
             }
         ).execute().then(async (data: any) => {
             const postid = data.identifiers[0].id
