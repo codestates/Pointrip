@@ -12,8 +12,9 @@ import oauthRouter from './routes/oauth';
 import Post from "./entity/post";
 import cookieParser from "cookie-parser";
 
-let server;
+
 let PORT :number = parseInt(process.env.SERVER_PORT as string, 10) || 4000;
+
 function getRepo (entity: any) {
   return AppDataSource.getRepository(entity);
 }
