@@ -3,7 +3,7 @@ import express, { Request, Response, NextFunction } from "express";
 import cors from 'cors';
 import bodyParser from "body-parser";
 import 'dotenv/config';
-import {AppDataSource} from "./data-source";
+import { AppDataSource } from "./data-source";
 import UserRouter from "./routes/user";
 import PlanRouter from "./routes/plan";
 import BookRouter from "./routes/bookmark";
@@ -12,39 +12,40 @@ import oauthRouter from './routes/oauth';
 import Post from "./entity/post";
 import cookieParser from "cookie-parser";
 
-let server;
-let PORT :number = parseInt(process.env.SERVER_PORT as string, 10) || 4000;
 
-function getRepo (entity: any) {
+const corsOption = {
+  Headers: { "content-type": "application/json" },
+  origin: "*",
+  credentials: true,
+  method: ["post", "get", "put", "patch", "delete", "options"],
+};
+let server;
+let PORT: number = parseInt(process.env.SERVER_PORT as string, 10) || 4000;
+
+function getRepo(entity: any) {
   return AppDataSource.getRepository(entity);
 }
 AppDataSource
-    .initialize()
-    .then(() => {
-        console.log("Data Source has been initialized!");
-        const app = express();
-        app.use(express.json());
-        app.use(express.urlencoded({ extended: false }));
-        app.use(cookieParser());
-	  app.use(bodyParser.json());
-        app.use(
-          cors({
-            origin:'*',
-            credentials: true,
-            methods: ['GET', 'POST', 'OPTIONS', 'PATCH', 'PUT', 'DELETE']
-          })
-        );
-        app.use("/users",UserRouter);
-        app.use("/Oauth", oauthRouter);
-        app.use("/plan",PlanRouter);
-        app.use("/bookmark",BookRouter);
-        server = app.listen(PORT, () => {
-          console.log(`http server runnning on port ${PORT}.`)
-        });
-    })
-    .catch((err: any) => {
-        console.error("Error during Data Source initialization:", err)
-    })
+  .initialize()
+  .then(() => {
+    console.log("Data Source has been initialized!");
+    const app = express();
+    app.use(express.json());
+    app.use(express.urlencoded({ extended: false }));
+    app.use(cookieParser());
+    app.use(cors(corsOption));
+    
+    app.use("/users", UserRouter);
+    app.use("/Oauth", oauthRouter);
+    app.use("/plan", PlanRouter);
+    app.use("/bookmark", BookRouter);
+    server = app.listen(PORT, () => {
+      console.log(`http server runnning on port ${PORT}.`)
+    });
+  })
+  .catch((err: any) => {
+    console.error("Error during Data Source initialization:", err)
+  })
 
 //routers
 
@@ -70,6 +71,6 @@ AppDataSource
 //   server = https.createServer(credentials, app);
 //   server.listen(HTTPS_PORT, () => console.log('https server runnning'));
 // } else {
-  
+
 // }
 export { server, getRepo };
