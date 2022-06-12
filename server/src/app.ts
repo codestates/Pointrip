@@ -26,9 +26,10 @@ AppDataSource
         app.use(express.json());
         app.use(express.urlencoded({ extended: false }));
         app.use(cookieParser());
+	  app.use(bodyParser.json());
         app.use(
           cors({
-            origin: ['https://localhost:3000'],
+            origin:'*',
             credentials: true,
             methods: ['GET', 'POST', 'OPTIONS', 'PATCH', 'PUT', 'DELETE']
           })
