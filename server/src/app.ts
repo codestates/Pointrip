@@ -14,8 +14,7 @@ import cookieParser from "cookie-parser";
 
 
 const corsOption = {
-  Headers: { "content-type": "application/json" },
-  origin: "*",
+  origin: ['https://localhost:3000'],
   credentials: true,
   method: ["post", "get", "put", "patch", "delete", "options"],
 };
@@ -34,7 +33,7 @@ AppDataSource
     app.use(express.urlencoded({ extended: false }));
     app.use(cookieParser());
     app.use(cors(corsOption));
-    
+
     app.use("/users", UserRouter);
     app.use("/Oauth", oauthRouter);
     app.use("/plan", PlanRouter);
