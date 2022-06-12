@@ -39,3 +39,4 @@ package-lock.json
 system.log
 /logs
 data-source.ts
+/src/data-source.ts
