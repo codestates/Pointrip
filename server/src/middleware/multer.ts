@@ -30,7 +30,7 @@ export const upload = multer({
   storage: multerS3({
     //multerS3 설정 항목
     s3: s3,
-    bucket: "pointrip-image", //bucket 이름
+    bucket: "pointrip-photo", //bucket 이름
     // contentType: multerS3.AUTO_CONTENT_TYPE, // 자동을 콘텐츠 타입 세팅
     acl: "public-read-write", //읽고 쓰기 모두 허용
     key: function (req, file, cb) {
@@ -39,3 +39,4 @@ export const upload = multer({
   }),
   limits: { fileSize: 5 * 1024 * 1024 },
 });
+//

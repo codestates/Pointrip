@@ -18,9 +18,8 @@ router.post(
     addPlan
 );
 router.patch('/', updPlan)
-router.get('/:email', myPage)
-router.get('/${email}/${post_id}', myPost) //하나의 게시물에 포인트1보여주기
-router.get('/${email}/${post_id}/${point_id}') //~2
+router.get('/mypage', myPage) //토큰값보내주기
+router.get('/postId=:postId', myPost) //하나의 게시물에 포인트1보여주기
 router.get('/plan/search?search=${search}')
 router.delete('/:postId', deletePlan)
 
