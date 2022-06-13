@@ -40,3 +40,5 @@ system.log
 /logs
 data-source.ts
 /src/data-source.ts
+src/data-source.ts
+server/src/data-source.ts
