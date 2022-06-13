@@ -11,6 +11,7 @@ export const AppDataSource = new DataSource({
     database: "pointrip3",
     synchronize: true,
     logging: true,
-    entities: ["src/entity/*.{js,ts}"],
+    entities: ["./build/**/*.entity.js"]
+    //["src/entity/*.{js,ts}"],
 
 })

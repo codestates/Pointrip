@@ -24,27 +24,32 @@ let PORT: number = parseInt(process.env.SERVER_PORT as string, 10) || 4000;
 function getRepo(entity: any) {
   return AppDataSource.getRepository(entity);
 }
-AppDataSource
-  .initialize()
-  .then(() => {
-    console.log("Data Source has been initialized!");
-    const app = express();
-    app.use(express.json());
-    app.use(express.urlencoded({ extended: false }));
-    app.use(cookieParser());
-    app.use(cors(corsOption));
 
-    app.use("/users", UserRouter);
-    app.use("/Oauth", oauthRouter);
-    app.use("/plan", PlanRouter);
-    app.use("/bookmark", BookRouter);
-    server = app.listen(PORT, () => {
-      console.log(`http server runnning on port ${PORT}.`)
-    });
-  })
-  .catch((err: any) => {
-    console.error("Error during Data Source initialization:", err)
-  })
+
+const app = express();
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(cors(corsOption));
+
+app.use("/users", UserRouter);
+app.use("/Oauth", oauthRouter);
+app.use("/plan", PlanRouter);
+app.use("/bookmark", BookRouter);
+server = app.listen(PORT, () => {
+  console.log(`http server runnning on port ${PORT}.`)
+
+  AppDataSource
+    .initialize()
+    .then(async (connection) => {
+      console.log("📚 DB connect! TypeORM");
+    })
+    .catch((err: any) => {
+      console.error("Error during Data Source initialization:", err)
+    })
+
+});
+
 
 //routers
 

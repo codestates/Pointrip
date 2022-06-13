@@ -8,7 +8,9 @@
     "typeorm": "typeorm-ts-node-commonjs",
     "migrate:create": "ts-node ./node_modules/typeorm/cli.js migration:create -n Test",
     "migrate:run": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:run",
-    "migrate:revert": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:revert"
+    "migrate:revert": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:revert",
+    "build": "tsc --build",
+    "clean": "tsc --build --clean"
   },
   "dependencies": {
     "axios": "^0.27.2",
