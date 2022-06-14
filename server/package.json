@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon ./build/app.js",
+    "start": "node ./build/app.js",
+    "test" : "nodemon src/app.ts",
     "dev": "ts-node-dev src/app.ts",
     "typeorm": "typeorm-ts-node-commonjs",
     "migrate:create": "ts-node ./node_modules/typeorm/cli.js migration:create -n Test",

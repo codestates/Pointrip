@@ -17,11 +17,11 @@ router.post(
     upload.array("image", 5),
     addPlan
 );
-router.patch('/', updPlan)
-router.get('/mypage', myPage) //토큰값보내주기
+router.patch('/postId=:postId', updPlan)
+router.get('/mypost/', myPage) //토큰값보내주기
 router.get('/postId=:postId', myPost) //하나의 게시물에 포인트1보여주기
-router.get('/plan/search?search=${search}')
-router.delete('/:postId', deletePlan)
+router.get('/search?search=${search}')
+router.delete('/postId=:postId', deletePlan)
 
 
 

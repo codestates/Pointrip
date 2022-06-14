@@ -127,8 +127,8 @@ export default {
     return getRepo(User)
     .find({ where: { email: accessTokenData?.email }})
     .then((data: any) => {
-      console.log(data);
-      res.json({ data: { userInfo: data } });
+      console.log(data[0]);
+      res.json({ data: { userInfo: data[0] } });
     })
     .catch((err: any) => console.log(err));
   },
@@ -144,8 +144,7 @@ export default {
     .find({ where: { email: accessTokenData?.email }});
     userToUpdate.username = req.body.username;
     userToUpdate.password = req.body.password;
-    userToUpdate.phone = req.body.phone;
-    userToUpdate.bio = req.body.bio;
+    userToUpdate.introduction = req.body.introduction;
     await getRepo(User).save(userToUpdate);
   },
   // delete ${email}: dropout --------------------------------------------------
