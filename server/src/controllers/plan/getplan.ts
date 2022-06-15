@@ -3,6 +3,7 @@ import Post from '../../entity/post'
 import { getRepo } from "../../app";
 import Photo from '../../entity/photo';
 import { Any } from 'typeorm';
+import Saved from '../../entity/saved';
 
 
 
@@ -17,22 +18,38 @@ const getPlan = async (req: Request, res: Response) => {
  
       .where({
       
-      }).execute().then( (data: any) => {
+      }).execute().then( async (data: any) => {
+      
+        let list = data.map((obj: {
+            postId: any; name: any;
+        }) => {
+            return obj.postId
+        });
+        console.log(list)
+        for(let i = 0 ; i<list.length;i++){
+            await getRepo(Saved).createQueryBuilder().select("userId")
+            .where({
+                post: list[i]
+            }).execute()
+            
+            .then(async (datas: any) => {
+        
+                    data[i].storage = datas
+            })
+
+        }
         console.log(data)
-        res.status(200).send(data)
-    
-    
-    
+       return res.status(200).send(data)
+
     })
 
-    } catch (err) {
-        console.log(err)
-        return res.status(500).send('internal server error');
-    }
+} catch (err) {
+console.log(err)
+return res.status(500).send('internal server error');
+}
 
 
 
 }
-
 
 export default getPlan;
