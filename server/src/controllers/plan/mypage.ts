@@ -17,9 +17,9 @@ const myPage = async (req: Request, res: Response) => {
             return res.status(401)
                 .send('토큰값이 없습니다.');
         }
-        await getRepo(Post).createQueryBuilder().select("Postid,image1,title")
-        .leftJoin('Post.user','user')
-        .leftJoin('Post.photos','photo')
+        await getRepo(Post).createQueryBuilder("a").select("a.id as postId,a.title,c.image1,b.username")
+        .leftJoin('a.user','b')
+        .leftJoin('a.photos','c')
         .where({
             user: accessTokenData.id
         }).execute(

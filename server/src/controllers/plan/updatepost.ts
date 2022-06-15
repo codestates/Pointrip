@@ -10,37 +10,49 @@ import { getRepo } from "../../app";
 const updPlan = async (req: Request, res: Response) => {
     console.log("updPlan도입")
     try {
-        const { title, date, diary, address, latitude, longtitude, image,user_Id } = req.body
+        const { title, day, diary, address, latitude, longitude} = req.body
+        const postId = req.params.postId
         const accessTokenData: any = await token.isAuthorized(req);
-        console.log(image)
-        if (!title || !date || !address || !latitude || !longtitude || !image) {
+       const images: any = req.files;
+       	console.log(title, day,diary,address,latitude,longitude,postId)
+        console.log(title)
+        let imagesArray: any;
+        let imagePaths;
+        if (images) {
+            imagesArray = images.map((oneFile: any) => {
+              return String(oneFile.location);
+            });
+            imagePaths = imagesArray.join(",");
+          }
+        console.log("이미지",images)
+        console.log("이미지어레이",imagesArray)
+          console.log("이미지어레이",imagesArray)
+        if (!title || !day || !address || !latitude || !longitude) {
             return res.status(401).send({ "message": "인풋값오류" })
         } else if (!accessTokenData) {
             console.log('토큰값이 없습니다.');
             return res.status(401)
                 .send('토큰값이 없습니다.');
         }
-        await getRepo(Post).createQueryBuilder().insert().values(
+        await getRepo(Post).createQueryBuilder().update().set(
             {
-                user: accessTokenData.id, address: address, day: date, diary: diary, title: title, latitude: latitude, longtitude: longtitude // 아이디 토큰 값으로 변경
+                address: address, day: day, diary: diary, title: title, latitude: latitude, longitude: longitude // 아이디 토큰 값으로 변경
             }
-        ).execute().then(async (data: any) => {
-            const postid = data.identifiers[0].id
-            console.log(postid)
+        ).where({id : postId}).execute().then(async (data: any) => {
+             console.log(data)
+        
 
-            getRepo(Photo).createQueryBuilder().insert().values(
+            getRepo(Photo).createQueryBuilder().update().set(
                 {
-                    post : data.identifiers[0].id , image1 :image.image1,image2 :image.image2,image3 :image.image3,image4 :image.image4,image5 :image.image5
+                    image1 :imagesArray[0],image2 :imagesArray[1],image3 :imagesArray[2],image4 :imagesArray[3],image5 :imagesArray[4]
                 }
-            ).execute().then(async (data: any) => {
+            ).where({ post : postId}).execute().then(async (data: any) => {
                 res.status(201).send({
-                    message : "일정이 생성되었습니다.",
-                    postid : postid
+                    message : "일정이 수정되었습니다.",
+            
                 })
             })
         })
-
-
 
     } catch (err) {
         console.log(err)

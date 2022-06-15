@@ -14,21 +14,20 @@ const getBook = async (req :Request, res :Response) => {
      
         const accessTokenData: any = await token.isAuthorized(req);
         console.log(accessTokenData.id)
-        await getRepo(Saved).createQueryBuilder()
-        .leftJoinAndSelect('Saved.user','user')
-        .leftJoinAndSelect('Saved.post','post')
+        console.log(accessTokenData.username)
+        await getRepo(Saved).createQueryBuilder('a').select("a.postId, b.title,c.image1 ,d.username")
+     
+        .leftJoin('a.post','b')
+        .leftJoin('b.photos', 'c')
+        .leftJoin('b.user' ,'d')
+
+   
         .where({
             user: accessTokenData.id
         }).execute()
-        
-        
-        
-        
         .then((data: any) => {
             
                 console.log(data)
-           
-            
         })
 
     } catch (err) {
