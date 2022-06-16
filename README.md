@@ -1,4 +1,4 @@
-Welcome to the Pointrip-server wiki!
+
 
 <br><br>
 
