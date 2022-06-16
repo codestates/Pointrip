@@ -1,6 +1,5 @@
 import 'dotenv/config';
 import { Request, Response } from 'express';
-import { StatusCodes } from 'http-status-codes';
 import { sign, verify } from 'jsonwebtoken';
 
 export default {
@@ -19,8 +18,7 @@ export default {
     res
     .cookie("jwt", accessToken, {
       httpOnly: true,
-    }).redirect(StatusCodes.OK, '/');
-    /* .json({ data: { accessToken }, message: "ok" }); */
+    }).json({ data: { accessToken }, message: "ok" });
   },
   /* resendAccessToken: (res: Response, accessToken: string, data: any) => {
     res.json({ data: { accessToken, userInfo: data }, message: "ok" });

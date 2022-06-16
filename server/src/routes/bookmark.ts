@@ -7,7 +7,7 @@ import getBook from "../controllers/bookmark/getbook";
 
 
 const router = express.Router();
-router.get('/',getBook);
+router.get('/:userId',getBook);
 router.post('/',addBook);
 router.delete('/',delBook)
 export default router;

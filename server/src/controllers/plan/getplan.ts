@@ -3,53 +3,34 @@ import Post from '../../entity/post'
 import { getRepo } from "../../app";
 import Photo from '../../entity/photo';
 import { Any } from 'typeorm';
-import Saved from '../../entity/saved';
 
 
 
 const getPlan = async (req: Request, res: Response) => {
     console.log("getPlan도입")
     try {
-      await getRepo(Photo).createQueryBuilder('a').select("a.image1,a.postId, b.title ,d.username")
-     
-      .leftJoin('a.post','b')
-      .leftJoin('b.user' ,'d')
-
- 
-      .where({
-      
-      }).execute().then( async (data: any) => {
-      
-        let list = data.map((obj: {
-            postId: any; name: any;
-        }) => {
-            return obj.postId
-        });
-        console.log(list)
-        for(let i = 0 ; i<list.length;i++){
-            await getRepo(Saved).createQueryBuilder().select("userId")
-            .where({
-                post: list[i]
-            }).execute()
+      await getRepo(Photo).find(
+        {
+            select:["image1"],
+            relations: ['post'],
             
-            .then(async (datas: any) => {
-        
-                    data[i].storage = datas
-            })
-
         }
+      ).then( (data: any) => {
         console.log(data)
-       return res.status(200).send(data)
-
+        res.status(200).send(data)
+    
+    
+    
     })
 
-} catch (err) {
-console.log(err)
-return res.status(500).send('internal server error');
-}
+    } catch (err) {
+        console.log(err)
+        return res.status(500).send('internal server error');
+    }
 
 
 
 }
+
 
 export default getPlan;

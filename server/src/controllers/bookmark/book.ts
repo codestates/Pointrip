@@ -4,7 +4,6 @@ import { Query } from 'typeorm/driver/Query';
 import { getRepo } from '../../app';
 import Saved from '../../entity/saved';
 import bookRouter from '../../routes/bookmark';
-import token from '../token-functions';
 
 
 const addBook = async (req: Request, res: Response) => {
@@ -12,18 +11,9 @@ const addBook = async (req: Request, res: Response) => {
 
     console.log("addBook도입")
     try {
-        const accessTokenData: any = await token.isAuthorized(req);
-        const { postId} = req.body
-        const userId = accessTokenData.id
-        console.log(postId)
-
-
-        if (!accessTokenData) {
-            console.log('토큰값이 없습니다.');
-            return res.status(401)
-                .send('토큰값이 없습니다.');
-        }
-        else if (!postId) {
+        const { postId, userId } = req.body
+        console.log(postId, userId)
+        if (!postId || !userId) {
             res.status(400).send({ 'message': 'input error' })
         }
         await getRepo(Saved).createQueryBuilder().select().where(

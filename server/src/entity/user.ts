@@ -33,18 +33,23 @@ export default class User extends BaseTimeEntity {
   @Column({
       nullable!: true
   })
-  introduction!: string
+  bio!: string
 
   @Column({
       unique!: true
   })
   email!: string
 
+  @Column({
+      unique!: true,
+      nullable!: true
+  })
+  phone!: string
 
   @Column({
     nullable!: true
   })
-  profileImg!: string
+  image!: string
 
   @Column({
     default!: false
