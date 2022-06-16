@@ -87,7 +87,7 @@ export default {
             if (!results) {
               res.status(500)
                 .send('계정 저장에 실패하였습니다.');
-              return console.log('계정 저장에 실패하였습니다..');
+              return console.log('계정 저장에 실패하였습니다.');
             } else {
               console.log(`계정 저장 완료: ${results}`);
               let obj: object = Object.assign({}, results);

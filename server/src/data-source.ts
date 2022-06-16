@@ -12,7 +12,7 @@ export const AppDataSource = new DataSource({
     password: "newfox11",
     database: "pointrip3",
     synchronize: true,
-    logging: true,
+    logging: false,
     entities: [
         __dirname + "/entity/*.ts"
     ],
