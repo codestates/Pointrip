@@ -17,5 +17,4 @@ export default async (req: Request, res: Response) => {
     if (user.length) res.send(ReasonPhrases.OK);
     res.status(404)
     .send('존재하지 않는 사용자입니다.');
-    console.log('존재하지 않는 사용자입니다.');
 };

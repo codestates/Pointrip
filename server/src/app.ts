@@ -11,7 +11,6 @@ import indexRouter from './routes'
 import oauthRouter from './routes/oauth';
 import Post from "./entity/post";
 import cookieParser from "cookie-parser";
-import session from "express-session";
 
 
 const corsOption = {
@@ -21,44 +20,31 @@ const corsOption = {
 };
 let server;
 let PORT: number = parseInt(process.env.SERVER_PORT as string, 10) || 4000;
-let sessionSecret = String(process.env.SESSION_SECRET);
 
 function getRepo(entity: any) {
   return AppDataSource.getRepository(entity);
 }
+AppDataSource
+  .initialize()
+  .then(() => {
+    console.log("Data Source has been initialized!");
+    const app = express();
+    app.use(express.json());
+    app.use(express.urlencoded({ extended: false }));
+    app.use(cookieParser());
+    app.use(cors(corsOption));
 
-
-const app = express();
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(cors(corsOption));
-app.use(session({
-  secret: sessionSecret
-}));
-
-app.use("/users", UserRouter);
-app.use("/oauth", oauthRouter);
-app.use("/plan", PlanRouter);
-app.use("/bookmark", BookRouter);
-server = app.listen(PORT, () => {
-  console.log(`http server runnning on port ${PORT}.`);
-
-  AppDataSource
-    .initialize()
-    .then(async (connection) => {
-      console.log("📚 DB connect! TypeORM");
-    })
-    .catch((err: any) => {
-      console.error("Error during Data Source initialization:", err)
+    app.use("/users", UserRouter);
+    app.use("/Oauth", oauthRouter);
+    app.use("/plan", PlanRouter);
+    app.use("/bookmark", BookRouter);
+    server = app.listen(PORT, () => {
+      console.log(`http server runnning on port ${PORT}.`)
     });
-
-});
-declare module 'express-session' {
-  export interface SessionData {
-    user: { [key: string]: any };
-  }
-}
+  })
+  .catch((err: any) => {
+    console.error("Error during Data Source initialization:", err)
+  })
 
 //routers
 
