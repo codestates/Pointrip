@@ -8,7 +8,7 @@
 
 
 
-🖋 프로젝트 소개
+###🖋 프로젝트 소개
 <hr>
 
 길었던 펜데믹, 그동안 여러분은 어떤것을 가장 하고 싶으셨나요?
@@ -33,7 +33,7 @@
 
 
 
-🖋 Team LOGIN
+###🖋 Team LOGIN
 
 ### 박찬민
 * Github : https://github.com/charmingpark
