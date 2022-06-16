@@ -6,10 +6,10 @@ import Post from "./entity/post"
 
 export const AppDataSource = new DataSource({
     type: "mysql",
-    host: "localhost",
+    host: "pointrip.czzigxvcggcg.us-east-1.rds.amazonaws.com",
     port: 3306,
-    username: "root",
-    password: "newfox11",
+    username: "pointrip",
+    password: "pointrip11",
     database: "pointrip3",
     synchronize: true,
     logging: false,
