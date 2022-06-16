@@ -19,8 +19,8 @@ export default {
     res
     .cookie("jwt", accessToken, {
       httpOnly: true,
-    }).redirect(StatusCodes.OK, '/');
-    /* .json({ data: { accessToken }, message: "ok" }); */
+    })//.redirect(StatusCodes.OK, '/');
+    .json({ data: { accessToken }, message: "ok" });
   },
   /* resendAccessToken: (res: Response, accessToken: string, data: any) => {
     res.json({ data: { accessToken, userInfo: data }, message: "ok" });
