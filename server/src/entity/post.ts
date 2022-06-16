@@ -39,7 +39,7 @@ class Post extends BaseTimeEntity {
     @Column()
     latitude!: string
     @Column()
-    longtitude!: string
+    longitude!: string
 }
 
 export default Post;

@@ -2,6 +2,8 @@ import "reflect-metadata"
 import { DataSource } from "typeorm"
 import Post from "./entity/post"
 
+
+
 export const AppDataSource = new DataSource({
     type: "mysql",
     host: "pointrip.czzigxvcggcg.us-east-1.rds.amazonaws.com",
@@ -10,7 +12,9 @@ export const AppDataSource = new DataSource({
     password: "pointrip11",
     database: "pointrip3",
     synchronize: true,
-    logging: true,
-    entities: ["src/entity/*.{js,ts}"],
-
+    logging: false,
+    entities: [
+        __dirname + "/entity/*.ts"
+    ],
+    //["src/entity/*.{js,ts}"],
 })
