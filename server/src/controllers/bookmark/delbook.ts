@@ -37,10 +37,10 @@ const delBook = async (req :Request, res :Response) => {
             console.log(data)
           
             if (data.length===0) {
-                res.status(422).send({ "message": "already canceled" })
+                res.status(200).send({ "message": "already canceled" })
             } else {
                 const delbook =  await getRepo(Saved).createQueryBuilder().delete().where({post :postId, user : userId}).execute();
-                return res.status(200).send({"message":"success"})
+                return res.status(201).send({"message":"success"})
             
             }
         })

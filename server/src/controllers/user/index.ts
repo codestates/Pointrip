@@ -90,13 +90,15 @@ export default {
               return console.log('계정 저장에 실패하였습니다.');
             } else {
               console.log(`계정 저장 완료: ${results}`);
-              let obj: object = Object.assign({}, results);
+              let obj: any = Object.assign({}, results);
               if (!obj) {
                 res.status(500)
                   .send('클래스를 객체로 전환하는 데 실패하였습니다.');
                 return console.log('클래스를 객체로 전환하는 데 실패하였습니다.');
               } else {
                 console.log(`클래스의, 객체로의 전환 완료: ${obj}`);
+                delete obj.password;
+                console.log(obj);
                 let accessToken = token.generateAccessToken(obj as any);
                 if (!accessToken) {
                   res.status(500)
@@ -127,6 +129,10 @@ export default {
     return getRepo(User)
       .find({ where: { email: accessTokenData?.email } })
       .then((data: any) => {
+          /* console.log(data[0]); */
+        /* console.log(typeof data[0]); */
+        delete data[0].password;
+        delete data[0].passwordHash;
         console.log(data[0]);
         res.json({ data: { userInfo: data[0] } });
       })
@@ -138,32 +144,70 @@ export default {
     try {
       const accessTokenData: any = token.isAuthorized(req);
       const { introduction, username, password } = req.body
+      console.log(password)
+    
+      
       const profileImg: any = req.files;
       let imagesArray: any;
 
       if (!accessTokenData) {
         res.status(StatusCodes.UNAUTHORIZED)
           .send('권한이 없습니다.');
-      }
-      else if (profileImg) {
+      } else if (profileImg) {
         imagesArray = profileImg.map((oneFile: any) => {
           return String(oneFile.location);
         });
 
       }
-
-      console.log(introduction, username, password, imagesArray)
-
-
-      await getRepo(User).createQueryBuilder().update().set(
-        {
-          introduction: introduction, password: password, passwordHash: bcrypt.hashSync(password, 10), username: username, profileImg: imagesArray[0]
-        }
-      ).where({ id: accessTokenData.id }).execute().then(async (data1: any) => {
-        return res.status(200).send({
-          message: "회원정보수정완료",
+      if(password.length === 0){
+        await getRepo(User).createQueryBuilder().update().set(
+          {
+            introduction: introduction,username: username, profileImg: imagesArray[0]
+          }
+        ).where({ id: accessTokenData.id }).execute().then(async (data1: any) => {
+          return res.status(200).send({
+            message: "회원정보수정완료",
+          })
         })
-      })
+      } else if(imagesArray.length ===0){
+        await getRepo(User).createQueryBuilder().update().set(
+          {
+            introduction: introduction, password: password, passwordHash: bcrypt.hashSync(password, 10), username: username
+          }
+        ).where({ id: accessTokenData.id }).execute().then(async (data1: any) => {
+          return res.status(200).send({
+            message: "회원정보수정완료",
+          })
+        })
+      
+      } else if(imagesArray.length ===0 && password.length ===0){
+        await getRepo(User).createQueryBuilder().update().set(
+          {
+            introduction: introduction, username: username
+          }
+        ).where({ id: accessTokenData.id }).execute().then(async (data1: any) => {
+          return res.status(200).send({
+            message: "회원정보수정완료",
+          })
+        })
+      }
+      
+      
+      
+      else{
+        console.log(introduction, username, password, imagesArray)
+
+
+        await getRepo(User).createQueryBuilder().update().set(
+          {
+            introduction: introduction, password: password, passwordHash: bcrypt.hashSync(password, 10), username: username, profileImg: imagesArray[0]
+          }
+        ).where({ id: accessTokenData.id }).execute().then(async (data1: any) => {
+          return res.status(200).send({
+            message: "회원정보수정완료",
+          })
+        })
+      }
     } catch (err) {
       console.log(err)
       return res.status(500).send('internal server error');

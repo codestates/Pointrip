@@ -1,9 +1,9 @@
 import express from 'express';
 const router = express.Router();
 
-import kakao from '../controllers/oauth/kakao';
+import Kakao from '../controllers/oauth/kakao';
 
-router.get('/kakao', kakao.requestAuthCode);
-router.get('/', kakao.requestToken);
+router.get('/kakao',Kakao.requestAuthCode )
+router.get('/',Kakao.requestToken);
 
 export default router;

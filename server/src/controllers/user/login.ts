@@ -16,13 +16,14 @@ export default async (req: Request, res: Response) => {
     console.log('이메일 또는 비밀번호가 올바르지 않습니다.');
     res.status(StatusCodes.NOT_FOUND)
     .send('이메일 또는 비밀번호가 올바르지 않습니다.');
+  } else {
+    let obj: any = Object.assign({}, user[0]);
+    /* console.log(obj); */
+    if (!bcrypt.compareSync(password, obj.passwordHash))
+    return res.status(400).send('인증에 실패하였습니다.');
+    delete obj.password;
+    console.log(obj);
+    const accessToken = token.generateAccessToken(obj);
+    token.sendAccessToken(res, accessToken);
   }
-  let obj: any = Object.assign({}, user[0]);
-  /* console.log(obj); */
-  if (!bcrypt.compareSync(password, obj.passwordHash))
-  return res.status(400).send('인증에 실패하였습니다.');
-  delete obj.password;
-  console.log(obj);
-  const accessToken = token.generateAccessToken(obj);
-  token.sendAccessToken(res, accessToken);
 };
