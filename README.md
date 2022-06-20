@@ -93,7 +93,7 @@ EC2, 로드밸런서, route53, ACM을 사용하여 https 인증, <br>RDS를 이�
 ### 🖋 More Info
 
 ***
-[ProjectURL] (https://pointrip.net)
+[Pointrip URL](https://pointrip.net)
 [👾 Wiki](https://github.com/codestates/Pointrip/wiki)
 
 [🗓 회의록](https://github.com/codestates/Pointrip/projects/4)
