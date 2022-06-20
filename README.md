@@ -83,9 +83,10 @@ EC2, 로드밸런서, route53, ACM을 사용하여 https 인증, <br>RDS를 이�
  
 
 <br>
-### 🖋 사용기술
-<img  alt="스크린샷 2022-05-26 오후 2 14 41" src="[https://user-images.githubusercontent.com/77973029/174611063-2ae73525-a027-45c8-9efd-e036254896a7.png]">
 
+### 🖋 Skills
+
+***
 
 
 ### 🖋 More Info
