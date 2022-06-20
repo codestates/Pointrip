@@ -41,12 +41,17 @@
 ***
 
 
+
+
+
+
 ## 박찬민
 * Github : https://github.com/charmingpark
 * Role : Team Member
 * Positon : Fronte-End
 * Stack : axios, redux, ts, js,  Styled-Component, react-router, react-hooks, html
-* Works : 
+* Works : <br> 제플린, adobeXD를 이용한 페이지 디자인 ,전반적인 페이지 디자인을 CSS와 styled-component를 사용하여 구현<br>react-hook-form과 axios를 통해 회원가입, 사용자 프로필수정 페이지 구현, react-router-dom을 통해 모든 페이지 라우터 구축, privateRoute를 이용해 접근권한 제어 
+
 
 
 ## 배상건
@@ -54,7 +59,9 @@
 * Role : Team Member
 * Positon : Fronte-End
 * Stack : axios, redux, ts, js,  Styled-Component, react-router, react-hooks, html
-* Works :
+* Works :<br>
+ Wireframe 기획,컴포넌트 구조 기획,Redux 설계,로그인 페이지 구현,모달창 구현,<br>
+마이페이지 기능 구현(여행 일정, 찜한 일정),내 일정 만들기 기능 구현(CRUD)
 
 
 ## 박지훈
@@ -62,7 +69,9 @@
 * Role : Team Leader
 * Positon : Back-End
 * Stack : Node.js, TypeScript, MySQL, TypeORM, Express
-* Works : 
+* Works : <br>
+Post , Saved, Photo 구현, Multer를 사용하여 FORM-DATA(image) 처리, S3버킷을 이용한 이미지 저장,<br> OAuth를 사용하여 소셜 로그인 구현
+EC2, 로드밸런서, route53, ACM을 사용하여 https 인증, <br>RDS를 이용한 데이터 관리 (Mysql 사용), EC2, S3, CloudFront를 이용한 배포
 
 
 ## 김정석
@@ -70,7 +79,8 @@
 * Role : Team Member
 * Positon : Back-End
 * Stack : Node.js, TypeScript, MySQL, TypeORM, Express
-* Works : 
+* Works : <br>BCrypt를 사용하여 암호 해싱, JWT를 사용하여 제한적 권한 부여, OAuth를 사용하여 소셜 로그인 구현,<br>EC2, 로드밸런서, route53, ACM을 사용하여 https 인증, RDS를 이용한 데이터 관리 (Mysql 사용),
+ 
 
 <br>
 
