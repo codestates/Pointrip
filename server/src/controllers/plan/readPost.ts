@@ -49,7 +49,7 @@ const myPost = async (req: Request, res: Response) => {
             //    });
                
                
-                res.status(200).send(data1)
+                res.status(200).send(data1[0])
             })
 
 

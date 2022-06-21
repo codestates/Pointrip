@@ -23,7 +23,7 @@ const addBook = async (req: Request, res: Response) => {
             return res.status(401)
                 .send('토큰값이 없습니다.');
         }
-        else if (!postId) {
+        if (!postId) {
             res.status(400).send({ 'message': 'input error' })
         }
         await getRepo(Saved).createQueryBuilder().select().where(
@@ -42,10 +42,10 @@ const addBook = async (req: Request, res: Response) => {
             console.log(data)
           
             if (data.length!==0) {
-                res.status(422).send({ "message": "already existed" })
+               return res.status(200).send({ "message": "already existed" })
             } else {
                 const addbook = await getRepo(Saved).createQueryBuilder().insert().values({ user: userId, post: postId }).execute();
-                return res.status(200).send({ "message": "success" })
+                return res.status(201).send({ "message": "success" })
             }
         })
 
