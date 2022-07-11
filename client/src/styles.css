@@ -1,0 +1,234 @@
+/* reset.css
+   http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	font-family: "Segoe UI", Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+  text-decoration: none;
+  color:inherit;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+h1 {
+  font-size: 30px;
+  display: inline-block; 
+  font-weight: 600;
+  color: #186aa5;
+}
+a, button{cursor: pointer;
+	transition: opacity 0.1s ease-in-out;
+
+}
+a:hover{
+	opacity: 0.5;
+	transition: opacity 0.1s ease-in-out;
+}
+button{
+	border: none;
+}
+
+/* 모든 페이지 공통속성 */
+
+button.navigateBtn{
+	position: absolute;
+	border: none;
+	height:40px;
+	width:150px;
+	background-color: #186aa5;
+	color:#fff;
+}
+button.navigateBtn.clicked{
+	background-color: #fff;
+	color: #186aa5;
+
+}
+.alert{
+	color: #cc3535;
+	position: absolute;
+	padding:5px;
+	font-weight: 500;
+}
+.alert::before {
+  display: inline;
+  content: "⚠ ";
+}
+
+.signDetail{
+	width:500px;
+	margin: 0 auto;
+	padding-top:296px;
+}
+
+
+.signDetail ul{
+	width:100%;
+	margin: 0 auto;
+	/* height:; */
+}
+.signDetail ul li{
+	height:77px;
+	width:50%;
+	margin: 0 auto;
+	display: inline-block;
+	/* height:; */
+}
+.signDetail ul li button{
+	z-index: 11;
+	display: absolute;
+	display: inline-block;
+	height:77px;
+	width:250px;
+	/* opacity: 0; */
+	background-color: #d1e4f3;
+	color: #73a1c2;
+	font-size: 24px;
+	font-weight: bold;
+}
+.signDetail .form{
+	background-color: #fff;
+	width:100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	box-sizing: border-box;
+	padding: 0 50px;
+	margin-top: 20px;
+}
+.signDetail .form input {
+	height: 60px;
+	width: 400px;
+	font-size: 18px;
+	box-sizing: border-box;
+	padding:20px;
+	letter-spacing:1.7px;
+	border: solid 1px #73a1c2;
+	color:#186aa5;
+	
+}
+.signDetail .form input:focus {
+    outline: none !important;
+    border-color: #719ECE;
+    box-shadow: 0 0 10px #719ECE;
+}
+.signDetail .form ::placeholder {
+	color:#73a1c2;
+  
+}
+
+
+.signDetail .form button {
+	height: 60px;
+	width: 400px;
+	line-height: 50px;
+	margin:20px 0;
+	font-size: 20px;
+  font-weight: 600;
+	background-color: #186aa5;
+	color: #e8eff7;
+}
+
+
+.social {
+	position: relative;
+	color:#73a1c2;
+}
+.social p{
+	padding: 40px 40px 120px;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+		background-color:#e8eff7;
+}
+.social button {
+	position: absolute;
+	bottom: 230px;
+	width: 230px;
+	height: 60px;
+	font-size: 24px;
+	color: inherit;
+	font-size: 24px;
+	background-color: #d1e4f3;
+	top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+	font-weight: bold;
+}
+.social .quickAccount{
+	position: absolute;
+	width: 100%;
+	text-align: center;
+	line-height:1.3;
+	background-color: #e8eff7;
+
+}
+.social .quickAccount span{
+	line-height:2;
+}
+
+
+.blind{width: 1px;height: 1px;overflow: hidden;border: none;position: absolute;clip: rect(1px, 1px, 1px, 1px);clip-path: inset(50%);}
+
+
+/* width */
+::-webkit-scrollbar {
+	width: 7px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+	border-radius: 3.5px;
+  /* box-shadow: inset 0 0 2px rgb(0, 0, 0); */
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+	border-radius: 3px;
+  background: #e8eff7;
+  box-shadow: inset 0 0 2px #186aa5;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
